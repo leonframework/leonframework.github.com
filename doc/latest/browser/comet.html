@@ -1,0 +1,124 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Receive messages from server (Comet) &mdash; Leon Framework v0.2 documentation</title>
+    <link rel="stylesheet" href="../_static/haiku.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/print.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.2',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/theme_extras.js"></script>
+    <link rel="top" title="Leon Framework v0.2 documentation" href="../index.html" />
+    <link rel="up" title="Browser" href="index.html" />
+    <link rel="next" title="Modules" href="../modules.html" />
+    <link rel="prev" title="Call server-side functions (AJAX)" href="ajax.html" /> 
+  </head>
+  <body>
+      <div class="header"><h1 class="heading"><a href="../index.html">
+          <span>Leon Framework v0.2 documentation</span></a></h1>
+        <h2 class="heading"><span>Receive messages from server (Comet)</span></h2>
+      </div>
+      <div class="topnav">
+      
+        <p>
+        «&#160;&#160;<a href="ajax.html">Call server-side functions (AJAX)</a>
+        &#160;&#160;::&#160;&#160;
+        <a class="uplink" href="../index.html">Contents</a>
+        &#160;&#160;::&#160;&#160;
+        <a href="../modules.html">Modules</a>&#160;&#160;»
+        </p>
+
+      </div>
+      <div class="content">
+        
+        
+  <div class="section" id="receive-messages-from-server-comet">
+<h1>Receive messages from server (Comet)<a class="headerlink" href="#receive-messages-from-server-comet" title="Permalink to this headline">¶</a></h1>
+<p>It&#8217;s a common requirement to modern Web applications to retrieve messages without the browser explicitly requesting it. A wide known umbrella term for that is Comet <a class="footnote-reference" href="#f1" id="id1">[1]</a>. Leon makes it very easy to make use of that technique.</p>
+<p>A client can subscribe to one or more topics and registers a handler function which gets called for each new message. You can also set and update filters to only receive messages which apply to a specific filter rule.</p>
+<div class="section" id="subscribe-to-a-topic-to-retrieve-messages">
+<h2>Subscribe to a topic to retrieve messages<a class="headerlink" href="#subscribe-to-a-topic-to-retrieve-messages" title="Permalink to this headline">¶</a></h2>
+<p>To subscribe to a topic in your html page, Leon offers a tag called <tt class="docutils literal"><span class="pre">&lt;leon:subscribe/&gt;</span></tt> which can be placed inside your code. For every page request, Leon registers that unique page to the topic(s) and replaces all <tt class="docutils literal"><span class="pre">&lt;leon:subscribe/&gt;</span></tt> tags with the necessary JavaScript code. A simple html page with a subscription would look like that:</p>
+<div class="highlight-html"><div class="highlight"><pre><span class="nt">&lt;html</span> <span class="na">xmlns:leon=</span><span class="s">&quot;http://leon.io&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;head&gt;</span>
+    <span class="nt">&lt;title&gt;</span>Test Page<span class="nt">&lt;/title&gt;</span>
+    <span class="c">&lt;!-- &lt;#include &quot;/io/leon/templates/full.desktop.html&quot; /&gt; --&gt;</span>
+    <span class="nt">&lt;script </span><span class="na">type=</span><span class="s">&quot;text/javascript&quot;</span><span class="nt">&gt;</span>
+      <span class="c1">// &lt;![CDATA[</span>
+      <span class="kd">function</span> <span class="nx">myCallback</span><span class="p">(</span><span class="nx">message</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">alert</span><span class="p">(</span><span class="nx">message</span><span class="p">);</span>
+      <span class="p">}</span>
+      <span class="c1">// ]]&gt;</span>
+    <span class="nt">&lt;/script&gt;</span>
+  <span class="nt">&lt;/head&gt;</span>
+  <span class="nt">&lt;body&gt;</span>
+    <span class="nt">&lt;leon:subscribe</span> <span class="na">topic=</span><span class="s">&quot;myChannel&quot;</span> <span class="na">handlerFn=</span><span class="s">&quot;myCallback&quot;</span> <span class="nt">/&gt;</span>
+  <span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</pre></div>
+</div>
+<p>In this example the page subscribes to a topic called <tt class="docutils literal"><span class="pre">myChannel</span></tt> and it registers a callback function called <tt class="docutils literal"><span class="pre">myCallback</span></tt>. The function gets called every time the page receives a new message from the server. In this example, an alert box will be prompted to the user.</p>
+<p>If you publish a message to a topic, every user who stays on a page which is subscribed to that topic will receive the message. Sometimes this is not what you want! If so, feel free to read on to learn something about message filtering.</p>
+</div>
+<div class="section" id="filter-messages">
+<h2>Filter messages<a class="headerlink" href="#filter-messages" title="Permalink to this headline">¶</a></h2>
+<p>Let&#8217;s say you are only interested in specific messages in a topic based on settings the user has made in the UI. For that case, you can set and update some filter rules. All filters will be applied on the server-side and only messages which have passed the filter will be send to the client.</p>
+<p>Filter values are valid for one unique page view. Means, that every single requested page has its own filter rules.</p>
+<p>To set a filter, you have to declare the fields you are interested in with the attribute <tt class="docutils literal"><span class="pre">filterOn</span></tt> in <tt class="docutils literal"><span class="pre">&lt;leon:subscribe</span> <span class="pre">/&gt;</span></tt> first. Here you specify the field names seperated by comma.</p>
+<div class="highlight-xml"><div class="highlight"><pre><span class="nt">&lt;leon:subscribe</span> <span class="na">topic=</span><span class="s">&quot;myChannel&quot;</span> <span class="na">filterOn=</span><span class="s">&quot;field1, field2&quot;</span> <span class="na">handlerFn=</span><span class="s">&quot;myCallback&quot;</span> <span class="nt">/&gt;</span>
+</pre></div>
+</div>
+<p>To set or update the actual filter values, you call the <tt class="docutils literal"><span class="pre">leon.comet.updateFilter</span></tt> JavaScript function.</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="nx">leon</span><span class="p">.</span><span class="nx">comet</span><span class="p">.</span><span class="nx">updateFilter</span><span class="p">(</span><span class="s2">&quot;myChannel&quot;</span><span class="p">,</span> <span class="s2">&quot;field1&quot;</span><span class="p">,</span> <span class="s2">&quot;1&quot;</span><span class="p">)</span>
+<span class="nx">leon</span><span class="p">.</span><span class="nx">comet</span><span class="p">.</span><span class="nx">updateFilter</span><span class="p">(</span><span class="s2">&quot;myChannel&quot;</span><span class="p">,</span> <span class="s2">&quot;field2&quot;</span><span class="p">,</span> <span class="s2">&quot;2&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">You can only update filters on fields which are declared in the <tt class="docutils literal"><span class="pre">filterOn</span></tt> attribute.</p>
+</div>
+<table class="docutils footnote" frame="void" id="f1" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id1">[1]</a></td><td>Comet <a class="reference external" href="http://en.wikipedia.org/wiki/Comet_%28programming%29">http://en.wikipedia.org/wiki/Comet_%28programming%29</a></td></tr>
+</tbody>
+</table>
+</div>
+</div>
+
+
+      </div>
+      <div class="bottomnav">
+      
+        <p>
+        «&#160;&#160;<a href="ajax.html">Call server-side functions (AJAX)</a>
+        &#160;&#160;::&#160;&#160;
+        <a class="uplink" href="../index.html">Contents</a>
+        &#160;&#160;::&#160;&#160;
+        <a href="../modules.html">Modules</a>&#160;&#160;»
+        </p>
+
+      </div>
+
+    <div class="footer">
+        &copy; Copyright 2011, WeigleWilczek GmbH.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
+    </div>
+  </body>
+</html>

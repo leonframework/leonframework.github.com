@@ -1,0 +1,132 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>MongoDB &mdash; Leon Framework v0.2 documentation</title>
+    <link rel="stylesheet" href="../_static/haiku.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/print.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.2',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/theme_extras.js"></script>
+    <link rel="top" title="Leon Framework v0.2 documentation" href="../index.html" />
+    <link rel="up" title="Modules" href="../modules.html" />
+    <link rel="next" title="SQL" href="sql.html" />
+    <link rel="prev" title="CoffeeScript" href="coffeescript.html" /> 
+  </head>
+  <body>
+      <div class="header"><h1 class="heading"><a href="../index.html">
+          <span>Leon Framework v0.2 documentation</span></a></h1>
+        <h2 class="heading"><span>MongoDB</span></h2>
+      </div>
+      <div class="topnav">
+      
+        <p>
+        «&#160;&#160;<a href="coffeescript.html">CoffeeScript</a>
+        &#160;&#160;::&#160;&#160;
+        <a class="uplink" href="../index.html">Contents</a>
+        &#160;&#160;::&#160;&#160;
+        <a href="sql.html">SQL</a>&#160;&#160;»
+        </p>
+
+      </div>
+      <div class="content">
+        
+        
+  <div class="section" id="mongodb">
+<h1>MongoDB<a class="headerlink" href="#mongodb" title="Permalink to this headline">¶</a></h1>
+<p>This Leon module enables your application to interact with a MongoDB <a class="footnote-reference" href="#f1" id="id1">[1]</a>.</p>
+<div class="section" id="enable-leon-s-mongodb-module">
+<h2>Enable Leon&#8217;s MongoDB module<a class="headerlink" href="#enable-leon-s-mongodb-module" title="Permalink to this headline">¶</a></h2>
+<p>Leon&#8217;s MongoDB module can be enabled by adding the following line to Leon&#8217;s configuration file:</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="nx">install</span><span class="p">(</span><span class="k">new</span> <span class="nb">Packages</span><span class="p">.</span><span class="nx">io</span><span class="p">.</span><span class="nx">leon</span><span class="p">.</span><span class="nx">persistence</span><span class="p">.</span><span class="nx">mongo</span><span class="p">.</span><span class="nx">LeonMongoModule</span><span class="p">());</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="setting-up-a-connection">
+<h2>Setting up a connection<a class="headerlink" href="#setting-up-a-connection" title="Permalink to this headline">¶</a></h2>
+<p>Without specifying any connection parameters Leon connects to the following database:</p>
+<ul class="simple">
+<li>Host: 127.0.0.1</li>
+<li>Port: 27017</li>
+<li>Database: leon_test</li>
+</ul>
+<p>To pass your own connection parameters you can use the <tt class="docutils literal"><span class="pre">LeonMongoConfig</span></tt> object. How to do this shows the following example:</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="kd">var</span> <span class="nx">mongoConfig</span> <span class="o">=</span> <span class="k">new</span> <span class="nb">Packages</span><span class="p">.</span><span class="nx">io</span><span class="p">.</span><span class="nx">leon</span><span class="p">.</span><span class="nx">persistence</span><span class="p">.</span><span class="nx">mongo</span><span class="p">.</span><span class="nx">LeonMongoConfig</span><span class="p">(</span><span class="s2">&quot;mongo0.example.com&quot;</span><span class="p">,</span>
+ <span class="mi">27017</span><span class="p">,</span> <span class="s2">&quot;your_database&quot;</span><span class="p">);</span>
+
+<span class="nx">install</span><span class="p">(</span><span class="k">new</span> <span class="nb">Packages</span><span class="p">.</span><span class="nx">io</span><span class="p">.</span><span class="nx">leon</span><span class="p">.</span><span class="nx">persistence</span><span class="p">.</span><span class="nx">mongo</span><span class="p">.</span><span class="nx">LeonMongoModule</span><span class="p">(</span><span class="nx">mongoConfig</span><span class="p">));</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="working-with-mongodb">
+<h2>Working with MongoDB<a class="headerlink" href="#working-with-mongodb" title="Permalink to this headline">¶</a></h2>
+<p>If you have enabled Leon&#8217;s MongoDB module, the MongoDB connection is bound to the server-side variable <tt class="docutils literal"><span class="pre">leon.mongo</span></tt>.</p>
+<p>To access a Mongo collection within a server-side JavaScript file just use its name in the scope of <tt class="docutils literal"><span class="pre">leon.mongo</span></tt>. For example, the code to insert a document in a collection named <tt class="docutils literal"><span class="pre">people</span></tt> looks like this:</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="nx">leon</span><span class="p">.</span><span class="nx">mongo</span><span class="p">.</span><span class="nx">people</span><span class="p">.</span><span class="nx">insert</span><span class="p">({</span><span class="nx">name</span><span class="o">:</span> <span class="s2">&quot;John Doe&quot;</span><span class="p">});</span>
+</pre></div>
+</div>
+<p>That&#8217;s all! If the collection doesn&#8217;t exist, MongoDB will create it for you.</p>
+<p>To query a collection you can use the function <tt class="docutils literal"><span class="pre">find</span></tt>:</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="kd">var</span> <span class="nx">cursor</span> <span class="o">=</span> <span class="nx">leon</span><span class="p">.</span><span class="nx">mongo</span><span class="p">.</span><span class="nx">people</span><span class="p">.</span><span class="nx">find</span><span class="p">({</span><span class="nx">name</span><span class="o">:</span> <span class="sr">/^John.*$/</span><span class="p">});</span>
+<span class="nx">cursor</span><span class="p">.</span><span class="nx">forEach</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">person</span><span class="p">)</span> <span class="p">{</span>
+  <span class="c1">// do something with the person</span>
+<span class="p">});</span>
+</pre></div>
+</div>
+<p>The example above queries the collection <tt class="docutils literal"><span class="pre">people</span></tt> for documents with a field <tt class="docutils literal"><span class="pre">name</span></tt> starting with &#8220;John&#8221;. The function <tt class="docutils literal"><span class="pre">find</span></tt> returns a cursor that can be used to iterate over the result.</p>
+<p>Please see the MongoDB documentation <a class="footnote-reference" href="#f2" id="id2">[2]</a> for more information about MongoDB functions. Generally speaking, all functions MongoDB provides can be accessed via Leon&#8217;s Mongo module.</p>
+</div>
+<div class="section" id="using-mongodb-from-java">
+<h2>Using MongoDB from Java<a class="headerlink" href="#using-mongodb-from-java" title="Permalink to this headline">¶</a></h2>
+<p>TODO</p>
+<table class="docutils footnote" frame="void" id="f1" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id1">[1]</a></td><td>MongoDB is a document-oriented database which comes with a simple query language. <a class="reference external" href="http://mongodb.org">http://mongodb.org</a></td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="f2" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id2">[2]</a></td><td>MongoDB Documentation <a class="reference external" href="http://www.mongodb.org/display/DOCS/Manual">http://www.mongodb.org/display/DOCS/Manual</a></td></tr>
+</tbody>
+</table>
+</div>
+</div>
+
+
+      </div>
+      <div class="bottomnav">
+      
+        <p>
+        «&#160;&#160;<a href="coffeescript.html">CoffeeScript</a>
+        &#160;&#160;::&#160;&#160;
+        <a class="uplink" href="../index.html">Contents</a>
+        &#160;&#160;::&#160;&#160;
+        <a href="sql.html">SQL</a>&#160;&#160;»
+        </p>
+
+      </div>
+
+    <div class="footer">
+        &copy; Copyright 2011, WeigleWilczek GmbH.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
+    </div>
+  </body>
+</html>

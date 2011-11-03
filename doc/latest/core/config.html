@@ -1,0 +1,223 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Configuration &mdash; Leon Framework v0.2 documentation</title>
+    <link rel="stylesheet" href="../_static/haiku.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/print.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.2',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/theme_extras.js"></script>
+    <link rel="top" title="Leon Framework v0.2 documentation" href="../index.html" />
+    <link rel="up" title="Leon Core" href="index.html" />
+    <link rel="next" title="Java Interoperability" href="java_interop.html" />
+    <link rel="prev" title="Leon Core" href="index.html" /> 
+  </head>
+  <body>
+      <div class="header"><h1 class="heading"><a href="../index.html">
+          <span>Leon Framework v0.2 documentation</span></a></h1>
+        <h2 class="heading"><span>Configuration</span></h2>
+      </div>
+      <div class="topnav">
+      
+        <p>
+        «&#160;&#160;<a href="index.html">Leon Core</a>
+        &#160;&#160;::&#160;&#160;
+        <a class="uplink" href="../index.html">Contents</a>
+        &#160;&#160;::&#160;&#160;
+        <a href="java_interop.html">Java Interoperability</a>&#160;&#160;»
+        </p>
+
+      </div>
+      <div class="content">
+        
+        
+  <div class="section" id="configuration">
+<h1>Configuration<a class="headerlink" href="#configuration" title="Permalink to this headline">¶</a></h1>
+<p>TODO</p>
+<dl class="function">
+<dt id="install">
+<tt class="descname">install</tt><big>(</big><em>module</em><big>)</big><a class="headerlink" href="#install" title="Permalink to this definition">¶</a></dt>
+<dd><p>Installs additional Leon modules.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Arguments:</th><td class="field-body"><ul class="first last simple">
+<li><strong>module</strong> (<em>Module</em>) &#8211; The module to install. (e.g. <tt class="docutils literal"><span class="pre">new</span> <span class="pre">Packages.io.leon.persistence.mongo.LeonMongoModule()</span></tt>)</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="setBaseDir">
+<tt class="descname">setBaseDir</tt><big>(</big><em>baseDir</em><big>)</big><a class="headerlink" href="#setBaseDir" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the base directory of the application. All relative locations are relative to this directory.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Arguments:</th><td class="field-body"><ul class="first last simple">
+<li><strong>baseDir</strong> (<em>string</em>) &#8211; Default value is the location of the configuration file.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<div class="section" id="resources">
+<span id="id1"></span><h2>Resources<a class="headerlink" href="#resources" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="addLocation">
+<tt class="descname">addLocation</tt><big>(</big><em>path</em><big>)</big><a class="headerlink" href="#addLocation" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adds a directory where Leon should lookup resources.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Arguments:</th><td class="field-body"><ul class="first last simple">
+<li><strong>path</strong> (<em>string</em>) &#8211; Relative paths are relative to the base directory.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="exposeUrl">
+<tt class="descname">exposeUrl</tt><big>(</big><em>regex</em><big>)</big><a class="headerlink" href="#exposeUrl" title="Permalink to this definition">¶</a></dt>
+<dd><p>Exposes paths that match the given regular expression to clients.</p>
+<p>By default, Leon gives client access to the following paths/files: <tt class="docutils literal"><span class="pre">*.html,</span> <span class="pre">*.png,</span> <span class="pre">*.jpg,</span> <span class="pre">*.gif,</span> <span class="pre">*.css,</span> <span class="pre">favicon.ico,</span> <span class="pre">*/browser/*.js,</span> <span class="pre">*/browser/*.json</span></tt>. To allow access on other paths or files to clients, you have to expose them by calling this function.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Arguments:</th><td class="field-body"><ul class="first last simple">
+<li><strong>regex</strong> (<em>string</em>) &#8211; Regular expression to match.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="loadFile">
+<tt class="descname">loadFile</tt><big>(</big><em>fileName</em><big>)</big><a class="headerlink" href="#loadFile" title="Permalink to this definition">¶</a></dt>
+<dd><p>Loads JavaScript files in the server environment.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Arguments:</th><td class="field-body"><ul class="first last simple">
+<li><strong>fileName</strong> (<em>string</em>) &#8211; A server-side JavaScript file to load. The path must be relative to a registered location or to the application&#8217;s classpath.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="ajax-support">
+<h2>AJAX-Support<a class="headerlink" href="#ajax-support" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="browser">
+<tt class="descname">browser</tt><big>(</big><em>browserName).linksToServer([serverName]</em><big>)</big><a class="headerlink" href="#browser" title="Permalink to this definition">¶</a></dt>
+<dd><p>Makes a server-side object accessible by clients via AJAX.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Arguments:</th><td class="field-body"><ul class="first last simple">
+<li><strong>browserName</strong> (<em>string</em>) &#8211; Name of the client-side variable.</li>
+<li><strong>serverName</strong> (<em>string</em>) &#8211; Variable name of the server-side object. If not given, serverName is the same as browser name.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt>
+<tt class="descname">browser</tt><big>(</big><em>browserName).linksToServer(clazz</em><big>)</big></dt>
+<dd><p>Makes Java objects directly accessible by clients via AJAX.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Arguments:</th><td class="field-body"><ul class="first last simple">
+<li><strong>browserName</strong> (<em>string</em>) &#8211; Name of the client-side variable.</li>
+<li><strong>clazz</strong> (<em>Class</em>) &#8211; Java class on the server-side.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="dependency-injection">
+<h2>Dependency injection<a class="headerlink" href="#dependency-injection" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="bind">
+<tt class="descname">bind</tt><big>(</big><em>clazz</em><big>)</big><a class="headerlink" href="#bind" title="Permalink to this definition">¶</a></dt>
+<dd><p>TODO: Registers a binding in google guice. See <a class="reference external" href="http://google-guice.googlecode.com/svn/trunk/javadoc/com/google/inject/Binder.html">Google Guice Binder</a> for more information about how to use bindings.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Arguments:</th><td class="field-body"><ul class="first last simple">
+<li><strong>clazz</strong> (<em>Class</em>) &#8211; The Java class to bind.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+</div>
+
+
+      </div>
+      <div class="bottomnav">
+      
+        <p>
+        «&#160;&#160;<a href="index.html">Leon Core</a>
+        &#160;&#160;::&#160;&#160;
+        <a class="uplink" href="../index.html">Contents</a>
+        &#160;&#160;::&#160;&#160;
+        <a href="java_interop.html">Java Interoperability</a>&#160;&#160;»
+        </p>
+
+      </div>
+
+    <div class="footer">
+        &copy; Copyright 2011, WeigleWilczek GmbH.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
+    </div>
+  </body>
+</html>

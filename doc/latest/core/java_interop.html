@@ -1,0 +1,158 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Java Interoperability &mdash; Leon Framework v0.2 documentation</title>
+    <link rel="stylesheet" href="../_static/haiku.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/print.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.2',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/theme_extras.js"></script>
+    <link rel="top" title="Leon Framework v0.2 documentation" href="../index.html" />
+    <link rel="up" title="Leon Core" href="index.html" />
+    <link rel="next" title="Browser" href="../browser/index.html" />
+    <link rel="prev" title="Configuration" href="config.html" /> 
+  </head>
+  <body>
+      <div class="header"><h1 class="heading"><a href="../index.html">
+          <span>Leon Framework v0.2 documentation</span></a></h1>
+        <h2 class="heading"><span>Java Interoperability</span></h2>
+      </div>
+      <div class="topnav">
+      
+        <p>
+        «&#160;&#160;<a href="config.html">Configuration</a>
+        &#160;&#160;::&#160;&#160;
+        <a class="uplink" href="../index.html">Contents</a>
+        &#160;&#160;::&#160;&#160;
+        <a href="../browser/index.html">Browser</a>&#160;&#160;»
+        </p>
+
+      </div>
+      <div class="content">
+        
+        
+  <div class="section" id="java-interoperability">
+<h1>Java Interoperability<a class="headerlink" href="#java-interoperability" title="Permalink to this headline">¶</a></h1>
+<p>Leon uses Mozilla&#8217;s Rhino <a class="footnote-reference" href="#f1" id="id1">[1]</a> JavaScript engine which comes with java interoperability out-of-the-box. This enables us to <a class="footnote-reference" href="#f2" id="id2">[2]</a>:</p>
+<ul class="simple">
+<li>create instances of Java classes</li>
+<li>call methods of Java objects</li>
+<li>access bean properties as they were ordinary attributes</li>
+<li>extend java classes and implementing interfaces in JavaScript.</li>
+</ul>
+<p>However, this interoperability is limited to primitive types only. Leon enables us to call methods of Java objects with complex JSON data structures by transforming them to the corresponding java type. For Java, this feature is limited to POJOs <a class="footnote-reference" href="#f3" id="id3">[3]</a> or simple Java Beans and Java collection types.</p>
+<div class="section" id="using-java-objects-in-javascript">
+<h2>Using Java objects in JavaScript<a class="headerlink" href="#using-java-objects-in-javascript" title="Permalink to this headline">¶</a></h2>
+<p>You can create a new instance of a Java object by using the keyword <tt class="docutils literal"><span class="pre">new</span></tt> and the full-qualified class name prefixed with <tt class="docutils literal"><span class="pre">Packages</span></tt>:</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="kd">var</span> <span class="nx">obj</span> <span class="o">=</span> <span class="k">new</span> <span class="nb">Packages</span><span class="p">.</span><span class="nx">java</span><span class="p">.</span><span class="nx">lang</span><span class="p">.</span><span class="nx">StringBuffer</span><span class="p">(</span><span class="s2">&quot;I&#39;m a Java object&quot;</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>Another way to access a Java object in JavaScript is by asking the dependency injector to get a reference to an object:</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="kd">var</span> <span class="nx">obj</span> <span class="o">=</span> <span class="nx">leon</span><span class="p">.</span><span class="nx">inject</span><span class="p">(</span><span class="nb">Packages</span><span class="p">.</span><span class="nx">xyz</span><span class="p">.</span><span class="nx">MyJavaObject</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>Getters and Setters can be accessed as they were ordinary attributes. Instead of <tt class="docutils literal"><span class="pre">person.getName()</span></tt> you can write <tt class="docutils literal"><span class="pre">person.name</span></tt> and instead of <tt class="docutils literal"><span class="pre">person.setName(x)</span></tt> you can write <tt class="docutils literal"><span class="pre">person.name</span> <span class="pre">=</span> <span class="pre">x</span></tt> in JavaScript.</p>
+<p>JavaScript objects can be passed as arguments to Java methods and will be converted to the corresponding Java type automatically. However, this will not work for overloaded method calls. It would not be guaranteed that Leon selects the desired method. In that case you have to perform the serialization manually by calling the method <tt class="docutils literal"><span class="pre">asJavaObject(clazz)</span></tt> yourself.</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="kd">var</span> <span class="nx">obj</span> <span class="o">=</span> <span class="p">{...}.</span><span class="nx">asJavaObject</span><span class="p">(</span><span class="nb">Packages</span><span class="p">.</span><span class="nx">io</span><span class="p">.</span><span class="nx">leon</span><span class="p">.</span><span class="nx">test</span><span class="p">.</span><span class="nx">TestBean</span><span class="p">);</span>
+<span class="nx">javaObject</span><span class="p">.</span><span class="nx">overloadedMethod</span><span class="p">(</span><span class="nx">obj</span><span class="p">,</span> <span class="mi">123</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>Note that return values will not be converted automatically, because we don&#8217;t want to destroy its identity. They are wrapped in a transparent proxy type and you can work with it like it were a ordinary JavaScript object. If you pass such a java proxy to a method, the java object gets simply unwrapped and there is no need for a complete conversion. However, to convert such a proxy object to a native JavaScript object, you can call the <tt class="docutils literal"><span class="pre">toJSON</span></tt> method.</p>
+</div>
+<div class="section" id="serializing-java-objects-to-json">
+<h2>Serializing Java objects to JSON<a class="headerlink" href="#serializing-java-objects-to-json" title="Permalink to this headline">¶</a></h2>
+<p>Every Java object you work with in JavaScript has a function called <tt class="docutils literal"><span class="pre">toJSON</span></tt>. It returns a JSON representation of the object by converting each property to the corresponding JavaScript type. This is most suitable for data objects more specifically for POJOs.</p>
+<p>If a java object is part of an HTTP response this function is called automatically. So in most cases you can ignore this function, but it&#8217;s good to know how to convert a Java object to a native JavaScript object anyway.</p>
+<p>The following conversions are supported:</p>
+<ul class="simple">
+<li>Primitive java types (including the corresponding <tt class="docutils literal"><span class="pre">java.lang</span></tt> objects) to JavaScript</li>
+<li>Java arrays to JavaScript arrays</li>
+<li>Java collection types to JavaScript arrays (Currently all <tt class="docutils literal"><span class="pre">java.util.Collection</span></tt> types are supported but not <tt class="docutils literal"><span class="pre">java.util.Map</span></tt>)</li>
+<li>POJOs to JavaScript objects</li>
+</ul>
+<p>Note: Dates are currently not supported.</p>
+</div>
+<div class="section" id="serializing-json-to-java-objects">
+<h2>Serializing JSON to Java objects<a class="headerlink" href="#serializing-json-to-java-objects" title="Permalink to this headline">¶</a></h2>
+<p>The serialization of JavaScript to Java is triggered automatically when a method of a Java object is called from JavaScript. More precisely, the provided arguments are converted.
+For instance, you can call a Java method which expects some kind of POJO as its argument from JavaScript. Leon tries to build that object from the supplied JavaScript object.</p>
+<p>The serialization can also be triggered manually by calling the method <tt class="docutils literal"><span class="pre">asJavaObject(clazz)</span></tt> where <tt class="docutils literal"><span class="pre">clazz</span></tt> is the desired target type. This method is available on all JavaScript objects.</p>
+<p>The following conversions are supported:</p>
+<ul>
+<li><p class="first">primitive JavaScript types to Java (Note: Date is currently not supported)</p>
+</li>
+<li><p class="first">JavaScript objects to POJOs</p>
+</li>
+<li><p class="first">JavaScript arrays to Java collections (<tt class="docutils literal"><span class="pre">java.util.Map</span></tt> is currently not supported)</p>
+<p>Leon looks up the desired Java collection type, tests if it is assignable from <tt class="docutils literal"><span class="pre">java.util.List</span></tt>
+or <tt class="docutils literal"><span class="pre">java.util.Set</span></tt> and converts the JavaScript array to an implementation of that type.</p>
+<p>Additionally, the following concrete Java Collection types are supported which can be used in signatures:</p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">java.util.ArrayList</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">java.util.LinkedList</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">java.util.Vector</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">java.util.HashSet</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">java.util.TreeSet</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">java.util.LinkedHashSet</span></tt></li>
+</ul>
+<p>For unsupported collection types Leon raises an exception.</p>
+</li>
+</ul>
+<table class="docutils footnote" frame="void" id="f1" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id1">[1]</a></td><td>Mozilla Rhino <a class="reference external" href="http://www.mozilla.org/rhino/">http://www.mozilla.org/rhino/</a></td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="f2" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id2">[2]</a></td><td>Scripting Java <a class="reference external" href="http://www.mozilla.org/rhino/scriptjava.html">http://www.mozilla.org/rhino/scriptjava.html</a></td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="f3" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id3">[3]</a></td><td>POJO (Plain Old Java Object) <a class="reference external" href="http://en.wikipedia.org/wiki/POJO">http://en.wikipedia.org/wiki/POJO</a></td></tr>
+</tbody>
+</table>
+</div>
+</div>
+
+
+      </div>
+      <div class="bottomnav">
+      
+        <p>
+        «&#160;&#160;<a href="config.html">Configuration</a>
+        &#160;&#160;::&#160;&#160;
+        <a class="uplink" href="../index.html">Contents</a>
+        &#160;&#160;::&#160;&#160;
+        <a href="../browser/index.html">Browser</a>&#160;&#160;»
+        </p>
+
+      </div>
+
+    <div class="footer">
+        &copy; Copyright 2011, WeigleWilczek GmbH.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
+    </div>
+  </body>
+</html>
