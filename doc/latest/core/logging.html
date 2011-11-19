@@ -8,7 +8,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Leon Core &mdash; Leon Framework 0.2 documentation</title>
+    <title>Logging &mdash; Leon Framework 0.2 documentation</title>
     
     <link rel="stylesheet" href="../_static/haiku.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -28,47 +28,49 @@
     <script type="text/javascript" src="../_static/doctools.js"></script>
     <script type="text/javascript" src="../_static/theme_extras.js"></script>
     <link rel="top" title="Leon Framework 0.2 documentation" href="../index.html" />
-    <link rel="next" title="Logging" href="logging.html" />
-    <link rel="prev" title="Introduction to Leon" href="../introduction.html" /> 
+    <link rel="up" title="Leon Core" href="index.html" />
+    <link rel="next" title="Configuration" href="config.html" />
+    <link rel="prev" title="Leon Core" href="index.html" /> 
   </head>
   <body>
       <div class="header"><h1 class="heading"><a href="../index.html">
           <span>Leon Framework 0.2 documentation</span></a></h1>
-        <h2 class="heading"><span>Leon Core</span></h2>
+        <h2 class="heading"><span>Logging</span></h2>
       </div>
       <div class="topnav">
       
         <p>
-        «&#160;&#160;<a href="../introduction.html">Introduction to Leon</a>
+        «&#160;&#160;<a href="index.html">Leon Core</a>
         &#160;&#160;::&#160;&#160;
         <a class="uplink" href="../index.html">Contents</a>
         &#160;&#160;::&#160;&#160;
-        <a href="logging.html">Logging</a>&#160;&#160;»
+        <a href="config.html">Configuration</a>&#160;&#160;»
         </p>
 
       </div>
       <div class="content">
         
         
-  <div class="section" id="leon-core">
-<h1>Leon Core<a class="headerlink" href="#leon-core" title="Permalink to this headline">¶</a></h1>
-<div class="toctree-wrapper compound">
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="logging.html">Logging</a></li>
-<li class="toctree-l1"><a class="reference internal" href="config.html">Configuration</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="config.html#resources">Resources</a></li>
-<li class="toctree-l2"><a class="reference internal" href="config.html#ajax-support">AJAX-Support</a></li>
-<li class="toctree-l2"><a class="reference internal" href="config.html#dependency-injection">Dependency injection</a></li>
+  <div class="section" id="logging">
+<h1>Logging<a class="headerlink" href="#logging" title="Permalink to this headline">¶</a></h1>
+<p>Leon provides a small wrapper around SLF4J (TODO: insert URL) to ease the usage for JavaScript code.</p>
+<dl class="function">
+<dt id="leon.getLogger">
+<tt class="descclassname">leon.</tt><tt class="descname">getLogger</tt><big>(</big><em>name</em><big>)</big><a class="headerlink" href="#leon.getLogger" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates a slf4j logger instance with the given name.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Arguments:</th><td class="field-body"><ul class="first last simple">
+<li><strong>name</strong> (<em>String</em>) &#8211; The name of the logger.</li>
 </ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="java_interop.html">Java Interoperability</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="java_interop.html#using-java-objects-in-javascript">Using Java objects in JavaScript</a></li>
-<li class="toctree-l2"><a class="reference internal" href="java_interop.html#serializing-java-objects-to-json">Serializing Java objects to JSON</a></li>
-<li class="toctree-l2"><a class="reference internal" href="java_interop.html#serializing-json-to-java-objects">Serializing JSON to Java objects</a></li>
-</ul>
-</li>
-</ul>
-</div>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
 </div>
 
 
@@ -76,11 +78,11 @@
       <div class="bottomnav">
       
         <p>
-        «&#160;&#160;<a href="../introduction.html">Introduction to Leon</a>
+        «&#160;&#160;<a href="index.html">Leon Core</a>
         &#160;&#160;::&#160;&#160;
         <a class="uplink" href="../index.html">Contents</a>
         &#160;&#160;::&#160;&#160;
-        <a href="logging.html">Logging</a>&#160;&#160;»
+        <a href="config.html">Configuration</a>&#160;&#160;»
         </p>
 
       </div>
